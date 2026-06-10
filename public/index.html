@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VokaFess — kata yang tak sempat terucap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LANDING -->
+<div id="pg-land" class="page active">
+  <nav>
+    <span class="nav-logo" onclick="showPage('pg-land')">Voka<span>Fess</span></span>
+    <div class="nav-links">
+      <button onclick="showPage('pg-submit')">Kirim</button>
+      <button onclick="showPage('pg-browse')">Jelajahi</button>
+      <button onclick="goHistory()">Riwayat</button>
+    </div>
+  </nav>
+  <div class="land-wrap">
+    <div class="land-left">
+      <span class="land-tag">Ungkapkan perasaanmu</span>
+      <h1 class="land-title">Kata yang<br>tak sempat<br>terucap, <em>lewat<br>sebuah lagu.</em></h1>
+      <p class="land-desc">Kirimkan lagu dan pesanmu untuk seseorang yang berarti. Karena kadang musik bisa menyampaikan apa yang sulit dikatakan.</p>
+      <div class="land-btns">
+        <button class="btn-fill" onclick="showPage('pg-submit')">Kirim Lagu</button>
+        <button class="btn-ghost" onclick="showPage('pg-browse')">Jelajahi Pesan</button>
+      </div>
+    </div>
+    <div class="land-right">
+      <div class="land-card-stack">
+        <div class="lc lc-1">
+          <div class="lc-to">untuk</div>
+          <div class="lc-name">Hana</div>
+          <div class="lc-msg">"When you're lost and alone, gua di sini. Selalu."</div>
+          <div class="lc-anon">anonim</div>
+        </div>
+        <div class="lc lc-2">
+          <div class="lc-to">untuk</div>
+          <div class="lc-name">Rara</div>
+          <div class="lc-song-box">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ff85bb" stroke-width="2.5" stroke-linecap="round"><path d="M9 19V6l12-3v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="15" r="3"/></svg>
+            <div><div class="lc-song-title">Satu Bulan</div><div class="lc-song-art">Float</div></div>
+          </div>
+          <div class="lc-msg">"Sebulan ini berat banget, tapi lagu ini ngingetin gua sama lo."</div>
+        </div>
+        <div class="lc lc-3">
+          <div class="lc-to">untuk</div>
+          <div class="lc-name" style="color:white;">Salsa</div>
+          <div class="lc-song-box">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffcee3" stroke-width="2.5" stroke-linecap="round"><path d="M9 19V6l12-3v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="15" r="3"/></svg>
+            <div><div class="lc-song-title">Take Care</div><div class="lc-song-art">NIKI</div></div>
+          </div>
+          <div class="lc-msg">"Kalo lo liat ini, gua udah move on. Seneng banget rasanya."</div>
+          <div class="lc-anon">anonim</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BROWSE -->
+<div id="pg-browse" class="page">
+  <nav>
+    <span class="nav-logo" onclick="showPage('pg-land')">Voka<span>Fess</span></span>
+    <div class="nav-links">
+      <button onclick="showPage('pg-submit')">Kirim</button>
+      <button class="anav">Jelajahi</button>
+      <button onclick="goHistory()">Riwayat</button>
+    </div>
+  </nav>
+  <div class="browse-header">
+    <div class="browse-header-inner">
+      <div class="pg-label">Koleksi Pesan</div>
+      <h1 class="pg-title">Jelajahi</h1>
+      <p class="pg-sub">Scroll semua pesan terbaru, atau ketik nama penerima buat cari pesan untukmu.</p>
+      <div class="search-bar">
+        <input type="text" id="search-q" placeholder="Cari nama penerima..." oninput="doSearch(this.value)">
+        <button onclick="doSearch(document.getElementById('search-q').value)">Cari</button>
+      </div>
+    </div>
+  </div>
+  <div class="browse-body">
+    <div class="cards-grid" id="cards-grid"></div>
+    <div class="no-result" id="no-result" style="display:none;">Belum ada pesan untuk nama itu.</div>
+  </div>
+</div>
+
+<!-- SUBMIT -->
+<div id="pg-submit" class="page">
+  <nav>
+    <span class="nav-logo" onclick="showPage('pg-land')">Voka<span>Fess</span></span>
+    <div class="nav-links">
+      <button class="anav">Kirim</button>
+      <button onclick="showPage('pg-browse')">Jelajahi</button>
+      <button onclick="goHistory()">Riwayat</button>
+    </div>
+  </nav>
+  <div class="form-outer">
+    <button class="back-btn" onclick="showPage('pg-land')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      kembali
+    </button>
+    <h1 class="form-title">Kirim Lagumu</h1>
+    <p class="form-sub">Pilih lagu dan tulis pesanmu untuk seseorang yang berarti.</p>
+    <div class="field">
+      <label>Untuk siapa?</label>
+      <input type="text" id="f-to" placeholder="Nama penerima...">
+    </div>
+    <div class="field">
+      <label>Link lagu (Spotify atau YouTube)</label>
+      <input type="text" id="f-link" placeholder="contoh: https://open.spotify.com/track/... atau https://youtube.com/watch?v=..." oninput="prevLink(this.value)">
+    </div>
+    <div class="link-preview" id="link-prev-box">
+      <div id="link-prev-icon"></div>
+      <div>
+        <div class="lp-txt" id="link-prev-title"></div>
+        <div class="lp-sub" id="link-prev-sub"></div>
+      </div>
+    </div>
+    <div class="divider-or"></div>
+    <div class="field">
+      <label>Judul lagu &amp; artis</label>
+      <input type="text" id="f-manual" placeholder="contoh: Rehat — Kunto Aji">
+    </div>
+    <div class="field">
+      <label>Pesanmu</label>
+      <textarea id="f-msg" placeholder="Tulis apa yang ingin kamu sampaikan..."></textarea>
+    </div>
+    <div class="field">
+      <label>Pengirim</label>
+      <div class="toggle-row">
+        <button class="tbtn on" onclick="setAnon(true,this)">Anonim</button>
+        <button class="tbtn" onclick="setAnon(false,this)">Tulis nama</button>
+      </div>
+      <div class="sender-field" id="f-swrap">
+        <input type="text" id="f-sender" placeholder="Nama kamu...">
+      </div>
+    </div>
+    <button class="btn-send" onclick="submitForm()">Kirim pesan</button>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div id="pg-success" class="page">
+  <nav>
+    <span class="nav-logo" onclick="showPage('pg-land')">Voka<span>Fess</span></span>
+    <div class="nav-links">
+      <button onclick="showPage('pg-submit')">Kirim</button>
+      <button onclick="showPage('pg-browse')">Jelajahi</button>
+      <button onclick="goHistory()">Riwayat</button>
+    </div>
+  </nav>
+  <div class="success-outer">
+    <div class="success-icon">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ff85bb" stroke-width="2" stroke-linecap="round"><path d="M9 19V6l12-3v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="15" r="3"/></svg>
+    </div>
+    <h2 class="success-title">Lagu Terkirim</h2>
+    <p class="success-sub">Pesan untuk <strong id="s-to" style="color:var(--navy)"></strong> sudah disiapkan.</p>
+    <div class="link-box" id="s-link"></div>
+    <button class="copy-btn" onclick="copyLink()">Salin link</button>
+    <p style="font-size:12px;color:#ccc;margin-bottom:1.5rem;">Bagikan link ini ke orangnya.</p>
+    <button class="btn-fill" style="width:100%;max-width:340px;border-radius:12px;" onclick="previewReceive()">Lihat halaman penerima</button>
+    <button class="btn-outline-navy" onclick="showPage('pg-submit')">Kirim lagi</button>
+  </div>
+</div>
+
+<!-- RECEIVE -->
+<div id="pg-receive" class="page">
+  <nav>
+    <span class="nav-logo" onclick="showPage('pg-land')">Voka<span>Fess</span></span>
+    <div class="nav-links">
+      <button onclick="showPage('pg-submit')">Kirim</button>
+      <button onclick="showPage('pg-browse')">Jelajahi</button>
+      <button onclick="goHistory()">Riwayat</button>
+    </div>
+  </nav>
+  <div class="receive-outer">
+    <button class="back-btn" onclick="showPage('pg-browse')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      kembali
+    </button>
+    <span class="r-from-badge">Ada pesan untukmu</span>
+    <div class="r-greeting">Halo,</div>
+    <div class="r-name" id="r-to"></div>
+    <p class="r-desc">Seseorang ingin kamu mendengar lagu ini. Mungkin ada sesuatu yang ingin mereka sampaikan lewat musik.</p>
+    <div id="r-song"></div>
+    <div class="r-msg-wrap">
+      <div class="r-msg-label">Pesan dari pengirim</div>
+      <div class="r-msg" id="r-msg"></div>
+      <div class="r-sender" id="r-from"></div>
+      <div class="r-timestamp" id="r-timestamp"></div>
+    </div>
+  </div>
+</div>
+
+<!-- HISTORY -->
+<div id="pg-history" class="page">
+  <nav>
+    <span class="nav-logo" onclick="showPage('pg-land')">Voka<span>Fess</span></span>
+    <div class="nav-links">
+      <button onclick="showPage('pg-submit')">Kirim</button>
+      <button onclick="showPage('pg-browse')">Jelajahi</button>
+      <button class="anav" onclick="goHistory()">Riwayat</button>
+    </div>
+  </nav>
+  <div class="hist-outer">
+    <button class="back-btn" onclick="showPage('pg-land')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      kembali
+    </button>
+    <div class="pg-label">Pengiriman Kamu</div>
+    <h1 class="pg-title" style="margin-bottom:6px;">Riwayat</h1>
+    <p class="pg-sub">Semua lagu yang pernah kamu kirim dari perangkat ini.</p>
+    <div class="hist-actions">
+      <span class="hist-count" id="hist-count"></span>
+      <button class="btn-clear" onclick="clearHistory()">Hapus semua</button>
+    </div>
+    <div id="hist-list"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
