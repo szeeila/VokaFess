@@ -1,8 +1,0 @@
-{
-  "name": "vokafess",
-  "version": "1.0.0",
-  "dependencies": {
-    "pg": "^8.11.0",
-    "node-fetch": "^2.7.0"
-  }
-}
