@@ -82,10 +82,22 @@ function prevLink(v) {
       .then(function(res) { return res.json(); })
       .then(function(data) {
         if (detectedId === ytId) {
-          var cleanTitle = data.title.replace(/(\(|\[)(Official|Lirik|Video|Audio|Music).*(\)|\])/gi, '').trim();
-          document.getElementById('link-prev-title').textContent = cleanTitle;
-          document.getElementById('link-prev-sub').textContent = 'Oleh: ' + data.author_name;
-          document.getElementById('f-manual').value = cleanTitle + ' — ' + data.author_name;
+          var rawTitle = data.title.replace(/(\(|\[)(Official|Lirik|Video|Audio|Music|MV|mv|Lyrics|lyric).*(\)|\])/gi, '').trim();
+          var ytParts = rawTitle.split(' - ');
+          var songTitle, songArtist;
+          if (ytParts.length >= 2) {
+            songArtist = ytParts[0].trim();
+            songTitle  = ytParts.slice(1).join(' - ').trim();
+          } else {
+            songTitle  = rawTitle;
+            songArtist = data.author_name;
+          }
+          if (data.author_name && data.author_name.toLowerCase().indexOf('vevo') === -1) {
+            songArtist = data.author_name;
+          }
+          document.getElementById('link-prev-title').textContent = songTitle;
+          document.getElementById('link-prev-sub').textContent = 'Oleh: ' + songArtist;
+          document.getElementById('f-manual').value = songTitle + ' — ' + songArtist;
         }
       })
       .catch(function() {
@@ -94,7 +106,6 @@ function prevLink(v) {
           document.getElementById('link-prev-sub').textContent = 'Gagal memuat detail otomatis.';
         }
       });
-
   } else if (spId) {
     detectedType = 'sp'; detectedId = spId;
     box.className = 'link-preview show sp';
