@@ -54,7 +54,7 @@ function getYtId(url) {
 }
 
 function getSpId(url) {
-  var regExp = /spotify\.com(?:\/[a-zA-Z-]+)?\/track\/([a-zA-Z0-9]+)/;
+  var regExp = /spotify\.com(?:\/[a-zA-Z-]+)?\/track\/([a-zA-Z0-9]+)(?:[?&].*)?$/;
   var match = url.match(regExp);
   return (match && match[1]) ? match[1] : null;
 }
